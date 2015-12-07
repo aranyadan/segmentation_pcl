@@ -8,12 +8,14 @@ using namespace cv;
 using namespace std;
 
 /// Global variables
-Mat src, src_gray;
-int thresh = 200;
+Mat src, src_gray,tracks;
+
+int thresh = 120;
 int max_thresh = 255;
 
 char* source_window = "Source image";
 char* corners_window = "Corners detected";
+char* tracked = "tracks";
 
 /// Function header
 void cornerHarris_demo( int, void* );
@@ -22,17 +24,31 @@ void cornerHarris_demo( int, void* );
 int main( int argc, char** argv )
 {
   /// Load source image and convert it to gray
-  src = imread( argv[1], 1 );
-  cvtColor( src, src_gray, CV_BGR2GRAY );
-
-  /// Create a window and a trackbar
+  VideoCapture v(argv[1]);
   namedWindow( source_window, CV_WINDOW_NORMAL);
+  namedWindow( corners_window, CV_WINDOW_NORMAL );
+  namedWindow( tracked, CV_WINDOW_NORMAL );
   createTrackbar( "Threshold: ", source_window, &thresh, max_thresh, cornerHarris_demo );
-  imshow( source_window, src );
+  int c=0;
+  while(1)
+  {
+    v>>src;
+    if(c==0)
+    {
+      tracks=Mat(src.rows, src.cols,CV_8UC1, Scalar(255));
+      c++;
+    }
+    cvtColor( src, src_gray, CV_BGR2GRAY );
 
-  cornerHarris_demo( 0, 0 );
 
-  waitKey(0);
+    imshow( source_window, src );
+
+    cornerHarris_demo( 0, 0 );
+
+    char a=waitKey(100);
+    if(a==27)
+      break;
+  }
   return(0);
 }
 
@@ -56,16 +72,25 @@ void cornerHarris_demo( int, void* )
   convertScaleAbs( dst_norm, dst_norm_scaled );
 
   /// Drawing a circle around corners
+  int count=0;
   for( int j = 0; j < dst_norm.rows ; j++ )
      { for( int i = 0; i < dst_norm.cols; i++ )
           {
             if( (int) dst_norm.at<float>(j,i) > thresh )
               {
                circle( dst_norm_scaled, Point( i, j ), 5,  Scalar(0), 2, 8, 0 );
+               circle( tracks, Point( i, j ), 1,  Scalar(0), 1, 8, 0 );
+               count ++;
               }
           }
      }
   /// Showing the result
-  namedWindow( corners_window, CV_WINDOW_NORMAL );
+  if(count==1)
+  {
+    cout<<"0\n";
+    tracks=Mat(src.rows,src.cols, CV_8UC1, Scalar(255));
+  }
+
   imshow( corners_window, dst_norm_scaled );
+  imshow( tracked, tracks );
 }

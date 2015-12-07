@@ -111,6 +111,19 @@ harris/fast:
 	$(MAKE) -f CMakeFiles/harris.dir/build.make CMakeFiles/harris.dir/build
 .PHONY : harris/fast
 
+#=============================================================================
+# Target rules for targets named harris2
+
+# Build rule for target.
+harris2: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 harris2
+.PHONY : harris2
+
+# fast build rule for target.
+harris2/fast:
+	$(MAKE) -f CMakeFiles/harris2.dir/build.make CMakeFiles/harris2.dir/build
+.PHONY : harris2/fast
+
 src/harriscorner.o: src/harriscorner.cpp.o
 .PHONY : src/harriscorner.o
 
@@ -135,6 +148,30 @@ src/harriscorner.cpp.s:
 	$(MAKE) -f CMakeFiles/harris.dir/build.make CMakeFiles/harris.dir/src/harriscorner.cpp.s
 .PHONY : src/harriscorner.cpp.s
 
+src/harriscornertracker.o: src/harriscornertracker.cpp.o
+.PHONY : src/harriscornertracker.o
+
+# target to build an object file
+src/harriscornertracker.cpp.o:
+	$(MAKE) -f CMakeFiles/harris2.dir/build.make CMakeFiles/harris2.dir/src/harriscornertracker.cpp.o
+.PHONY : src/harriscornertracker.cpp.o
+
+src/harriscornertracker.i: src/harriscornertracker.cpp.i
+.PHONY : src/harriscornertracker.i
+
+# target to preprocess a source file
+src/harriscornertracker.cpp.i:
+	$(MAKE) -f CMakeFiles/harris2.dir/build.make CMakeFiles/harris2.dir/src/harriscornertracker.cpp.i
+.PHONY : src/harriscornertracker.cpp.i
+
+src/harriscornertracker.s: src/harriscornertracker.cpp.s
+.PHONY : src/harriscornertracker.s
+
+# target to generate assembly for a file
+src/harriscornertracker.cpp.s:
+	$(MAKE) -f CMakeFiles/harris2.dir/build.make CMakeFiles/harris2.dir/src/harriscornertracker.cpp.s
+.PHONY : src/harriscornertracker.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -143,10 +180,14 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... harris"
+	@echo "... harris2"
 	@echo "... rebuild_cache"
 	@echo "... src/harriscorner.o"
 	@echo "... src/harriscorner.i"
 	@echo "... src/harriscorner.s"
+	@echo "... src/harriscornertracker.o"
+	@echo "... src/harriscornertracker.i"
+	@echo "... src/harriscornertracker.s"
 .PHONY : help
 
 

@@ -13,5 +13,8 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 add_executable (harris src/harriscorner.cpp)
 target_link_libraries (harris ${OpenCV_LIBRARIES} ${PCL_LIBRARIES})
 
+add_executable (harris2 src/harriscornertracker.cpp)
+target_link_libraries (harris2 ${OpenCV_LIBRARIES} ${PCL_LIBRARIES})
+
 
 
